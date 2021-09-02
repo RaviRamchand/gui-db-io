@@ -3,7 +3,7 @@ package application;
 public abstract class Person implements Comparable<Person>{
 	//Fields
 	protected String _fullName;
-	private String _address;
+	protected String _address;
 
 	//Constructors
 	public Person(String newName, String newAddress){
@@ -14,7 +14,7 @@ public abstract class Person implements Comparable<Person>{
 
 	@Override
 	public String toString(){
-		return (_fullName+ ", "+ _address);
+		return ("Name: "+_fullName+ ", Adress: "+ _address);
 	}
 	
 	//Abstract methods
