@@ -1,5 +1,11 @@
 package application;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,7 +17,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class MainController {
 	//Fields
@@ -33,12 +41,6 @@ public class MainController {
 			}
 		});
 
-		btnSort.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				sortEntry();
-			}
-		});
-
 		btnDis.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent e) {
 				display();
@@ -56,19 +58,47 @@ public class MainController {
 		//Add elements into the arraylist
 		this.arrList.add(new Student(name, address, gpa));
 		
+		Collections.sort(this.arrList);
+		
+		//Let user choose a file
+		FileChooser chooser = new FileChooser();
+		
+		FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("TEXT files", "*.txt");		
+		chooser.getExtensionFilters().add(exFilter);
+		
+		Window win = btnAdd.getScene().getWindow();
+		File fileDesc = chooser.showOpenDialog(win);		
+		
+		//Write file using arraylist
+		if(fileDesc != null) {
+			PrintWriter writer = null;
+			
+			try {
+				writer = new PrintWriter(fileDesc);
+				
+				for(Student s : this.arrList) {
+					writer.print(s._fullName +"," +s._address +"," +s._gpa +"\n");
+				}
+				System.out.println("Write successful");
+			}
+			catch(FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			finally {
+				if(writer != null) {
+					writer.close();
+				}
+			}
+		}
+		else {
+			System.out.println("File not found");
+		}
+		
+		
 		//Print arraylist elements to the console
 		for(Student s: arrList) {
 			System.out.println(s);
 		}
-	}
-
-	//Sort elements in the arraylist
-	private void sortEntry() {
-		System.out.println("Sort");
-		
-		Collections.sort(this.arrList);
-		System.out.println(this.arrList);
-		
 	}
 	
 	//Display elements in a separate window 
