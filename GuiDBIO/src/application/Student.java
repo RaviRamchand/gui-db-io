@@ -2,7 +2,7 @@ package application;
 
 public class Student extends Person{
 	//Fields
-	private double _gpa;	
+	protected double _gpa;	
 	
 	//Constructors 
 	public Student(String name, String address, double gpa) {
@@ -13,7 +13,7 @@ public class Student extends Person{
 	//override toString() from Person.java	
 	@Override
 	public String toString() {
-		return super.toString() +", " +this._gpa;
+		return super.toString() +", GPA: " +this._gpa;
 	}
 	
 	//implementation of abstract methods 
